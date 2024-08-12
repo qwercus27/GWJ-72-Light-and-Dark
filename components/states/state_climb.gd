@@ -8,7 +8,11 @@ func enter(_msg := {}) -> void:
 
 func physics_update(delta: float) -> void:
 	
-	#if Input.is_action_pressed("down") and player.is_on_floor() and not player.can_climb:
+	if not player.can_climb and not player.can_drop:
+		state_machine.transition_to("Idle")
+		return
+		
+	#if player.is_on_floor() and not player.can_climb and not player.can_drop:
 		#state_machine.transition_to("Idle")
 		#return
 	
@@ -34,8 +38,8 @@ func physics_update(delta: float) -> void:
 
 	player.move_and_slide()
 	
-	if Input.is_action_just_pressed("space"):
-		state_machine.transition_to("Air", {do_jump = true})
+	#if Input.is_action_just_pressed("space"):
+	#	state_machine.transition_to("Air", {do_jump = true})
 
 func on_released_ladder():
 	if(not player.is_on_floor()):

@@ -1015,7 +1015,7 @@ offset_bottom = 387.0
 rotation = 1.5708
 texture = SubResource("GradientTexture2D_d1ysf")
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="." groups=["Tile"]]
 texture_filter = 1
 tile_set = SubResource("TileSet_af13f")
 format = 2

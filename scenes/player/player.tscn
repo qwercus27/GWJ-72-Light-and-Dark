@@ -59,6 +59,7 @@ script = ExtResource("7_t7u8g")
 [node name="Interact" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
+position = Vector2(0, -1.58946e-07)
 shape = SubResource("RectangleShape2D_mevdj")
 
 [connection signal="area_entered" from="Interact" to="." method="_on_interact_area_entered"]
