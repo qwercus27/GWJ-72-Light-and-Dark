@@ -9,7 +9,9 @@ var jump_v = -450.0
 var can_climb = false
 var can_descend = false
 var can_drop = false
+var can_light = false
 var current_one_way
+var current_torch
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -29,7 +31,9 @@ func _physics_process(delta):
 			#position.y += 3
 			grabbed_ladder.emit()
 			
-		
+	if(can_light):
+		if Input.is_action_just_pressed("a"):
+			current_torch.interact()
 	#if not is_on_floor():
 		#if(can_drop == true):
 			#print("cannot drop")
@@ -43,6 +47,9 @@ func _on_interact_area_entered(area):
 	if area.is_in_group("one_way_platform"):
 		can_drop = true
 		current_one_way = area.get_parent()
+	if area.is_in_group("torch"):
+		can_light = true
+		current_torch = area.get_parent()
 
 func _on_interact_area_exited(area):
 	if area.is_in_group("ladder"):
@@ -56,4 +63,6 @@ func _on_interact_area_exited(area):
 			released_ladder.emit()
 	if area.is_in_group("one_way_platform"):
 		can_drop = false
+	if area.is_in_group("torch"):
+		can_light = false
 		

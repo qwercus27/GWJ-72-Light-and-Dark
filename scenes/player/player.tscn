@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dvtmbu6yl3wah"]
+[gd_scene load_steps=14 format=3 uid="uid://dvtmbu6yl3wah"]
 
 [ext_resource type="Texture2D" uid="uid://84a4sef835l8" path="res://scenes/player/player.png" id="1_praor"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rwkrc"]
@@ -23,6 +23,19 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xm4y"]
 size = Vector2(14, 16)
 
+[sub_resource type="Gradient" id="Gradient_hf0yb"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.338129, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.303233, 0.303233, 0.303233, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dobtp"]
+gradient = SubResource("Gradient_hf0yb")
+width = 50
+height = 50
+fill = 1
+fill_from = Vector2(0.504587, 0.513761)
+fill_to = Vector2(0.518349, 0)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mevdj"]
 size = Vector2(16, 16)
 
@@ -36,6 +49,11 @@ sprite_frames = SubResource("SpriteFrames_4plaa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7xm4y")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.921569, 0.788235, 1)
+texture = SubResource("GradientTexture2D_dobtp")
+texture_scale = 2.5
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_ctws3")

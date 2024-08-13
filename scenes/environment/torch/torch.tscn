@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://dcxux0dwv24pb"]
+
+[ext_resource type="Texture2D" uid="uid://dqs3b1uy0c5rp" path="res://scenes/environment/torch/torch.png" id="1_8obrp"]
+[ext_resource type="Script" path="res://scenes/environment/torch/torch.gd" id="1_v56t4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro2mi"]
+atlas = ExtResource("1_8obrp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qd0dd"]
+atlas = ExtResource("1_8obrp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ndboc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro2mi")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qd0dd")
+}],
+"loop": true,
+"name": &"unlit",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_hr0g3"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.344156, 0.74026)
+colors = PackedColorArray(1, 1, 1, 1, 0.29, 0.29, 0.29, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r07di"]
+gradient = SubResource("Gradient_hr0g3")
+width = 100
+height = 100
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oij4h"]
+size = Vector2(40, 40)
+
+[node name="Torch" type="Node2D"]
+script = ExtResource("1_v56t4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ndboc")
+animation = &"unlit"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -2)
+color = Color(1, 0.923, 0.79, 1)
+texture = SubResource("GradientTexture2D_r07di")
+texture_scale = 2.5
+
+[node name="Interact" type="Area2D" parent="." groups=["torch"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
+shape = SubResource("RectangleShape2D_oij4h")

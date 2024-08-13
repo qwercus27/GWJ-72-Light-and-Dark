@@ -1,15 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://87ks78rsj6hm"]
+[gd_scene load_steps=10 format=3 uid="uid://87ks78rsj6hm"]
 
 [ext_resource type="Texture2D" uid="uid://klubrfqxxmm3" path="res://images/tileset.png" id="1_7lj2w"]
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_ord5s"]
 [ext_resource type="Texture2D" uid="uid://w33ibuayc2w0" path="res://images/tileset_small.png" id="2_des4v"]
 [ext_resource type="PackedScene" uid="uid://dibbaexdtvhgf" path="res://scenes/environment/ladder/ladder.tscn" id="4_hj5ar"]
-
-[sub_resource type="Gradient" id="Gradient_b4abk"]
-colors = PackedColorArray(0.152, 0.7239, 0.95, 1, 0.5225, 0.828875, 0.95, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1ysf"]
-gradient = SubResource("Gradient_b4abk")
+[ext_resource type="PackedScene" uid="uid://dcxux0dwv24pb" path="res://scenes/environment/torch/torch.tscn" id="5_mrbfi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ekoe"]
 texture = ExtResource("1_7lj2w")
@@ -983,6 +978,7 @@ texture_region_size = Vector2i(8, 8)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_f4pse"]
 scenes/1/scene = ExtResource("4_hj5ar")
+scenes/2/scene = ExtResource("5_mrbfi")
 
 [sub_resource type="TileSet" id="TileSet_af13f"]
 physics_layer_0/collision_layer = 1
@@ -1000,20 +996,11 @@ scale = Vector2(3, 3)
 script = ExtResource("1_ord5s")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-offset_left = -1.0
-offset_right = 386.0
-offset_bottom = 114.0
-color = Color(0.282353, 0.670588, 1, 1)
-
-[node name="TextureRect" type="TextureRect" parent="ColorRect"]
-layout_mode = 0
-offset_left = 389.0
-offset_top = -1.0
-offset_right = 504.0
-offset_bottom = 387.0
-rotation = 1.5708
-texture = SubResource("GradientTexture2D_d1ysf")
+offset_left = 1.0
+offset_top = -6.0
+offset_right = 453.0
+offset_bottom = 243.0
+color = Color(0, 0, 0, 1)
 
 [node name="TileMap" type="TileMap" parent="." groups=["Tile"]]
 texture_filter = 1
@@ -1026,3 +1013,6 @@ layer_1/tile_data = PackedInt32Array(1703948, 2, 65536, 1245206, 2, 65536, 17039
 
 [node name="StartPos" type="Marker2D" parent="."]
 position = Vector2(23.3333, 170.333)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
