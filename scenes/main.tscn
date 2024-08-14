@@ -9,3 +9,6 @@ script = ExtResource("1_414w4")
 [node name="Player" parent="." instance=ExtResource("1_6dtcw")]
 
 [node name="Camera" type="Camera2D" parent="."]
+
+[connection signal="lit_torch" from="Player" to="." method="_on_player_lit_torch"]
+[connection signal="opened_door" from="Player" to="." method="_on_player_opened_door"]

@@ -3,6 +3,9 @@ extends CharacterBody2D
 
 signal grabbed_ladder
 signal released_ladder
+signal lit_torch
+signal opened_door
+
 var speed = 200.0
 var ladder_speed = 150.0
 var jump_v = -450.0
@@ -10,6 +13,7 @@ var can_climb = false
 var can_descend = false
 var can_drop = false
 var can_light = false
+var can_open = false
 var current_one_way
 var current_torch
 
@@ -34,6 +38,13 @@ func _physics_process(delta):
 	if(can_light):
 		if Input.is_action_just_pressed("a"):
 			current_torch.interact()
+			lit_torch.emit()
+	
+	if(can_open):
+		if Input.is_action_just_pressed("a") or Input.is_action_just_pressed("up"):
+			print("opening door")
+			opened_door.emit()
+			
 	#if not is_on_floor():
 		#if(can_drop == true):
 			#print("cannot drop")
@@ -50,6 +61,8 @@ func _on_interact_area_entered(area):
 	if area.is_in_group("torch"):
 		can_light = true
 		current_torch = area.get_parent()
+	if area.is_in_group("door"):
+		can_open = true
 
 func _on_interact_area_exited(area):
 	if area.is_in_group("ladder"):
@@ -65,4 +78,6 @@ func _on_interact_area_exited(area):
 		can_drop = false
 	if area.is_in_group("torch"):
 		can_light = false
+	if area.is_in_group("door"):
+		can_open = false
 		

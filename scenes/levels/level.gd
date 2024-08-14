@@ -1,16 +1,21 @@
 class_name Level
 extends Node2D
 
+var torch_count
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$DirectionalLight2D.energy = 0
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
+	$DirectionalLight2D.energy = .25 - ($LightsOnTimer.time_left * .25)
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	$PlantNote.set_visible(true)
+
+func turn_on_lights():
+	$LightsOnTimer.start()
+	
