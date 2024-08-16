@@ -36,6 +36,9 @@ func _process(delta):
 		door.unlock()
 		current_level.get_node("DirectionalLight2D").visible = true
 		current_level.turn_on_lights()
+	
+	$Player.position.x = clamp($Player.position.x, 16, 
+		current_level.get_node("TileMap").get_used_rect().size.x*16*game_scale - 16)
 
 
 func camera_control():
@@ -54,7 +57,7 @@ func _on_player_lit_torch():
 func _on_player_opened_door():
 	door.open()
 	$NextLevelTimer.start()
-	$Player.exit()
+	$Player.exit(door.position.x)
 	#$HUD/ClearedLabel.visible = true
 	
 

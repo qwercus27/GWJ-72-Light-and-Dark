@@ -85,6 +85,6 @@ func _on_interact_area_exited(area):
 	if area.is_in_group("door"):
 		can_open = false
 		
-func exit():
-	$StateMachine.transition_to("Exit")
+func exit(x_pos):
+	$StateMachine.transition_to("Exit", {door_x = x_pos})
 		
