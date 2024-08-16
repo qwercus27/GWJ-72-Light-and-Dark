@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsyhrpuwxgv1c"]
+
+[ext_resource type="PackedScene" uid="uid://87ks78rsj6hm" path="res://scenes/levels/level.tscn" id="1_tw3ee"]
+
+[node name="level_2" instance=ExtResource("1_tw3ee")]
+
+[node name="TileMap" parent="." index="1"]
+layer_1/tile_data = PackedInt32Array(720900, 3, 131072, 720906, 3, 131072, 720914, 3, 131072)
+
+[node name="StartPos" parent="." index="2"]
+position = Vector2(21.3333, 192)

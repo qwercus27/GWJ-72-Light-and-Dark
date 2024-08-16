@@ -10,5 +10,10 @@ script = ExtResource("1_414w4")
 
 [node name="Camera" type="Camera2D" parent="."]
 
+[node name="NextLevelTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="lit_torch" from="Player" to="." method="_on_player_lit_torch"]
 [connection signal="opened_door" from="Player" to="." method="_on_player_opened_door"]
+[connection signal="timeout" from="NextLevelTimer" to="." method="_on_next_level_timer_timeout"]

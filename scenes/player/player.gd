@@ -20,30 +20,35 @@ var current_torch
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-
+func _ready():
+	scale = Vector2(3,3)
+	$AnimatedSprite2D.modulate.a = 1.0
+	$PointLight2D.energy = 1
+	can_open = false
 
 func _physics_process(delta):
 	
-	if(can_climb):
+	if can_climb:
 
 		if Input.is_action_pressed("up"):
 			grabbed_ladder.emit()
 		
-	if(can_drop):
+	if can_drop:
 		if Input.is_action_just_pressed("down"):
 			current_one_way.pass_through_platform()
 			#position.y += 3
 			grabbed_ladder.emit()
 			
-	if(can_light):
+	if can_light:
 		if Input.is_action_just_pressed("a"):
 			current_torch.interact()
 			lit_torch.emit()
 	
-	if(can_open):
+	if can_open:
 		if Input.is_action_just_pressed("a") or Input.is_action_just_pressed("up"):
 			opened_door.emit()
-			
+	
+
 	#if not is_on_floor():
 		#if(can_drop == true):
 			#print("cannot drop")
@@ -79,4 +84,7 @@ func _on_interact_area_exited(area):
 		can_light = false
 	if area.is_in_group("door"):
 		can_open = false
+		
+func exit():
+	$StateMachine.transition_to("Exit")
 		
