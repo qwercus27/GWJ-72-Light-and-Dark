@@ -1002,7 +1002,7 @@ offset_left = 1.0
 offset_top = -6.0
 offset_right = 453.0
 offset_bottom = 243.0
-color = Color(0, 0, 0, 1)
+color = Color(0.28485, 0.28485, 0.28485, 1)
 
 [node name="TileMap" type="TileMap" parent="." groups=["Tile"]]
 texture_filter = 1

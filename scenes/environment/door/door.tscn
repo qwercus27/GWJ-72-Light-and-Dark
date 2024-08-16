@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8u477mm8io5m"]
+[gd_scene load_steps=9 format=3 uid="uid://b8u477mm8io5m"]
 
 [ext_resource type="Texture2D" uid="uid://d4dl6cywvrta2" path="res://scenes/environment/door/door.png" id="1_gpivl"]
 [ext_resource type="Script" path="res://scenes/environment/door/door.gd" id="1_ime7o"]
+[ext_resource type="Texture2D" uid="uid://br2f78ky4pp8r" path="res://images/A_Key.png" id="3_cobsx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7rom2"]
 atlas = ExtResource("1_gpivl")
@@ -60,3 +61,15 @@ animation = &"opened"
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_d81k5")
 disabled = true
+
+[node name="InteractHint" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -4.0
+offset_top = -21.0
+offset_right = 4.0
+offset_bottom = -13.0
+texture = ExtResource("3_cobsx")
+stretch_mode = 2
+
+[connection signal="area_entered" from="Interact" to="." method="_on_interact_area_entered"]
+[connection signal="area_exited" from="Interact" to="." method="_on_interact_area_exited"]

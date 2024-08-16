@@ -73,7 +73,7 @@ script = ExtResource("7_5sksq")
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_t7u8g")
 
-[node name="Interact" type="Area2D" parent="."]
+[node name="Interact" type="Area2D" parent="." groups=["player"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
 position = Vector2(0, -1.58946e-07)

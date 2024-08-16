@@ -1,7 +1,6 @@
 extends PlayerState
 
 func enter(_msg := {}) -> void:
-	print("entered climb state")
 	player.released_ladder.connect(on_released_ladder)
 	#player.get_node("AnimatedSprite2D").play("climbing")
 

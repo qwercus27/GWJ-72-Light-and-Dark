@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dcxux0dwv24pb"]
+[gd_scene load_steps=10 format=3 uid="uid://dcxux0dwv24pb"]
 
 [ext_resource type="Texture2D" uid="uid://dqs3b1uy0c5rp" path="res://scenes/environment/torch/torch.png" id="1_8obrp"]
 [ext_resource type="Script" path="res://scenes/environment/torch/torch.gd" id="1_v56t4"]
+[ext_resource type="Texture2D" uid="uid://br2f78ky4pp8r" path="res://images/A_Key.png" id="3_5qxfx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro2mi"]
 atlas = ExtResource("1_8obrp")
@@ -65,3 +66,15 @@ texture_scale = 2.5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
 shape = SubResource("RectangleShape2D_oij4h")
 debug_color = Color(0, 0.643137, 0.74902, 0.0431373)
+
+[node name="InteractHint" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = 7.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = -2.0
+texture = ExtResource("3_5qxfx")
+stretch_mode = 2
+
+[connection signal="area_entered" from="Interact" to="." method="_on_interact_area_entered"]
+[connection signal="area_exited" from="Interact" to="." method="_on_interact_area_exited"]

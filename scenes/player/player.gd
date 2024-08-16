@@ -8,7 +8,7 @@ signal opened_door
 
 var speed = 200.0
 var ladder_speed = 150.0
-var jump_v = -450.0
+var jump_v = -350.0
 var can_climb = false
 var can_descend = false
 var can_drop = false
@@ -42,7 +42,6 @@ func _physics_process(delta):
 	
 	if(can_open):
 		if Input.is_action_just_pressed("a") or Input.is_action_just_pressed("up"):
-			print("opening door")
 			opened_door.emit()
 			
 	#if not is_on_floor():
