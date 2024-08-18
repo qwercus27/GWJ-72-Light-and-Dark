@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvtmbu6yl3wah"]
+[gd_scene load_steps=25 format=3 uid="uid://dvtmbu6yl3wah"]
 
 [ext_resource type="Texture2D" uid="uid://84a4sef835l8" path="res://scenes/player/player.png" id="1_praor"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rwkrc"]
@@ -14,20 +14,73 @@
 [ext_resource type="AudioStream" uid="uid://tyuphctwn6uf" path="res://audio/running.mp3" id="12_47dqe"]
 [ext_resource type="AudioStream" uid="uid://bire5rjt42wc5" path="res://audio/climbing.mp3" id="13_6gbgl"]
 [ext_resource type="AudioStream" uid="uid://dtgfkwbrdecpa" path="res://audio/landing.mp3" id="14_wilm7"]
+[ext_resource type="AudioStream" uid="uid://c4bxvpiv7sgac" path="res://audio/hit.mp3" id="15_qktho"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30efv"]
+atlas = ExtResource("1_praor")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmqv2"]
+atlas = ExtResource("1_praor")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr58v"]
+atlas = ExtResource("1_praor")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q21ut"]
+atlas = ExtResource("1_praor")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbje0"]
+atlas = ExtResource("1_praor")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdn0"]
+atlas = ExtResource("1_praor")
+region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4plaa"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_praor")
+"texture": SubResource("AtlasTexture_30efv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmqv2")
 }],
 "loop": true,
-"name": &"default",
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr58v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.75,
+"texture": SubResource("AtlasTexture_q21ut")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jbje0")
+}, {
+"duration": 0.75,
+"texture": SubResource("AtlasTexture_ycdn0")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jbje0")
+}],
+"loop": true,
+"name": &"run",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xm4y"]
-size = Vector2(14, 15)
+size = Vector2(10, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mevdj"]
 size = Vector2(16, 16)
@@ -39,9 +92,10 @@ script = ExtResource("1_rwkrc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4plaa")
+animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_7xm4y")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -110,6 +164,11 @@ volume_db = -9.291
 [node name="LandingAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_wilm7")
 volume_db = -10.0
+
+[node name="HitAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_qktho")
+volume_db = 9.369
+pitch_scale = 1.47
 
 [connection signal="area_entered" from="Interact" to="." method="_on_interact_area_entered"]
 [connection signal="area_exited" from="Interact" to="." method="_on_interact_area_exited"]

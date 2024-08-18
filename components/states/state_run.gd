@@ -2,7 +2,7 @@ extends PlayerState
 
 func enter(_msg := {}) -> void:
 	#print("entered run state")
-	player.get_node("AnimatedSprite2D").play("running")
+	player.get_node("AnimatedSprite2D").play("run")
 	player.get_node("RunningAudio").play()
 
 func physics_update(delta: float) -> void:

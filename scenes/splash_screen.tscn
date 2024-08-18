@@ -16,17 +16,27 @@ offset_right = 1164.0
 offset_bottom = 720.0
 color = Color(0.0784314, 0.133333, 0.25098, 1)
 
-[node name="AscensionCard" type="Sprite2D" parent="."]
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="AscensionCard" type="Sprite2D" parent="Graphics"]
 position = Vector2(640, 428)
 scale = Vector2(0.105812, 0.105812)
 texture = ExtResource("2_vqy0l")
 
-[node name="WildCard" type="Sprite2D" parent="."]
+[node name="WildCard" type="Sprite2D" parent="Graphics"]
+visible = false
 position = Vector2(640, 573)
 scale = Vector2(0.128864, 0.128864)
 texture = ExtResource("3_3w5r3")
 
-[node name="WildJam" type="Sprite2D" parent="."]
+[node name="WildJam" type="Sprite2D" parent="Graphics"]
 texture_filter = 1
 position = Vector2(640, 225)
 texture = ExtResource("3_si67c")
+
+[node name="Timer1" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer1" to="." method="_on_timer_timeout"]

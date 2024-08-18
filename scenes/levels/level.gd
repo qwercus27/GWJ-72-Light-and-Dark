@@ -7,6 +7,9 @@ var torch_count
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$DirectionalLight2D.energy = 0
+	if($LitTorch):
+		$LitTorch.turn_on()
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

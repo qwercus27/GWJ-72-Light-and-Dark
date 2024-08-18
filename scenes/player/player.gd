@@ -35,6 +35,7 @@ func _ready():
 	$CollisionShape2D.disabled = false
 	velocity.y = 0
 	$RunningAudio.volume_db = -10
+	$AnimatedSprite2D.stop()
 
 func _physics_process(delta):
 	
@@ -62,6 +63,7 @@ func _physics_process(delta):
 	if key_count > 0 and can_unlock:
 		if Input.is_action_just_pressed("a"):
 			current_lock.unlock()
+			key_count -= 1
 	#if not is_on_floor():
 		#if(can_drop == true):
 			#print("cannot drop")
@@ -113,4 +115,5 @@ func exit(x_pos):
 func get_hit():
 	print("got hit")
 	$StateMachine.transition_to("Die")
+	$HitAudio.play()
 	hit.emit()

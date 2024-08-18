@@ -7,7 +7,7 @@ func enter(_msg := {}) -> void:
 	print("door_x is " + str(door_x))
 	player.velocity = Vector2.ZERO
 	play_audio()
-	
+	player.get_node("AnimatedSprite2D").play("climb")
 	
 func update(delta: float) -> void:
 	

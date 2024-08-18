@@ -32,7 +32,11 @@ func show_hint():
 func hide_hint():
 	$InteractHint.visible = false
 	
-
+func turn_on():
+	$Lights.visible = true
+	$AnimatedSprite2D.set_animation("lit")
+	$InteractHint.visible = false
+	
 func _on_interact_area_entered(area):
 	if area.is_in_group("player"):
 		if $AnimatedSprite2D.animation == "unlit":

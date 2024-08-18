@@ -23,10 +23,12 @@ func _ready():
 	$Player.get_node("StateMachine").transition_to("Air")
 	$Player._ready()
 	
-	$Music.play()
+	#$Music.play()
+	if not AudioStreamer.get_node("Music").playing:
+		AudioStreamer.get_node("Music").play()
 	
-	current_level.torch_count = current_level.get_node("TileMap").get_used_cells(1).size()
-	
+	current_level.torch_count = current_level.get_node("TileMap").get_used_cells(2).size()
+	print("torch count: " + str(current_level.torch_count))
 	door = current_level.get_node("Door")
 	current_level.get_node("DirectionalLight2D").visible = false
 	
@@ -43,6 +45,8 @@ func _process(delta):
 
 	$Player.position.x = clamp($Player.position.x, 16, 
 		current_level.get_node("TileMap").get_used_rect().size.x*16*game_scale - 16)
+		
+	$KeyHUD/Label.text = "x " + str($Player.key_count)
 
 
 func camera_control():
@@ -77,8 +81,12 @@ func change_level(level_id):
 
 func _on_next_level_timer_timeout():
 	
-	var next_level = int(current_level.level_name.split(" ")[1]) + 1
-	change_level(next_level)
+	if current_level.level_name == "Level 5":
+		Global.current_level = load("res://scenes/levels/level_1.tscn")
+		get_tree().change_scene_to_file("res://scenes/start_menu.tscn")
+	else:
+		var next_level = int(current_level.level_name.split(" ")[1]) + 1
+		change_level(next_level)
 	#$HUD/ClearedLabel.visible = false
 	
 
@@ -90,10 +98,10 @@ func _on_death_timer_timeout():
 	_ready()
 
 func display_level_title():
-	$CanvasLayer/LevelTitle.text = current_level.level_name
-	$CanvasLayer/LevelTitle.visible = true
+	$LevelTitle/Label.text = current_level.level_name
+	$LevelTitle.visible = true
 	$TitleTimer.start(3)
 
 
 func _on_title_timer_timeout():
-	$CanvasLayer/LevelTitle.visible = false
+	$LevelTitle.visible = false
