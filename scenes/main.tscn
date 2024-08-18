@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://drppih0tmbe22"]
+[gd_scene load_steps=5 format=3 uid="uid://drppih0tmbe22"]
 
 [ext_resource type="PackedScene" uid="uid://dvtmbu6yl3wah" path="res://scenes/player/player.tscn" id="1_6dtcw"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_414w4"]
+[ext_resource type="AudioStream" uid="uid://u6nah3nthoed" path="res://audio/gameplay_music.mp3" id="3_il2yf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_05upm"]
+font_size = 48
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_414w4")
@@ -14,6 +18,30 @@ script = ExtResource("1_414w4")
 wait_time = 3.0
 one_shot = true
 
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="TitleTimer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelTitle" type="Label" parent="CanvasLayer"]
+offset_left = 573.0
+offset_top = 119.0
+offset_right = 733.0
+offset_bottom = 186.0
+size_flags_horizontal = 4
+text = "Level 1"
+label_settings = SubResource("LabelSettings_05upm")
+horizontal_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_il2yf")
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="lit_torch" from="Player" to="." method="_on_player_lit_torch"]
 [connection signal="opened_door" from="Player" to="." method="_on_player_opened_door"]
 [connection signal="timeout" from="NextLevelTimer" to="." method="_on_next_level_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="TitleTimer" to="." method="_on_title_timer_timeout"]

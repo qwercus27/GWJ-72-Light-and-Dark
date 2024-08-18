@@ -3,11 +3,13 @@ extends PlayerState
 func enter(_msg := {}) -> void:
 	player.released_ladder.connect(on_released_ladder)
 	#player.get_node("AnimatedSprite2D").play("climbing")
-
+	player.get_node("RunningAudio").stop()
+	player.get_node("ClimbingAudio").play()
 
 func physics_update(delta: float) -> void:
 	
 	if not player.can_climb and not player.can_drop:
+		player.get_node("ClimbingAudio").stop()
 		state_machine.transition_to("Idle")
 		return
 		
@@ -29,10 +31,11 @@ func physics_update(delta: float) -> void:
 	var y_direction = Input.get_axis("up", "down")
 	
 	if y_direction:
-		
 		player.velocity.y = y_direction * player.ladder_speed
+		player.get_node("ClimbingAudio").set_stream_paused(false)
 	else:
 		player.velocity.y = move_toward(player.velocity.y, 0, player.ladder_speed)
+		player.get_node("ClimbingAudio").set_stream_paused(true)
 	#player.velocity.y += player.gravity * delta
 
 	player.move_and_slide()
@@ -42,7 +45,9 @@ func physics_update(delta: float) -> void:
 
 func on_released_ladder():
 	if(not player.is_on_floor()):
+		player.get_node("ClimbingAudio").stop()
 		state_machine.transition_to("Air")
 	else:
+		player.get_node("ClimbingAudio").stop()
 		state_machine.transition_to("Run")
 

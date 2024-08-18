@@ -22,11 +22,15 @@ func _ready():
 	$Player.position = current_level.get_node("StartPos").position * Vector2(game_scale,game_scale)
 	$Player.get_node("StateMachine").transition_to("Air")
 	$Player._ready()
-
+	
+	$Music.play()
+	
 	current_level.torch_count = current_level.get_node("TileMap").get_used_cells(1).size()
 	
 	door = current_level.get_node("Door")
 	current_level.get_node("DirectionalLight2D").visible = false
+	
+	display_level_title()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -36,7 +40,7 @@ func _process(delta):
 		door.unlock()
 		current_level.get_node("DirectionalLight2D").visible = true
 		current_level.turn_on_lights()
-	
+
 	$Player.position.x = clamp($Player.position.x, 16, 
 		current_level.get_node("TileMap").get_used_rect().size.x*16*game_scale - 16)
 
@@ -59,7 +63,7 @@ func _on_player_opened_door():
 	$NextLevelTimer.start()
 	$Player.exit(door.position.x)
 	#$HUD/ClearedLabel.visible = true
-	
+
 
 func player_boundaries():
 	$Player.position.x = clamp($Player.position.x, 0, 
@@ -73,8 +77,23 @@ func change_level(level_id):
 
 func _on_next_level_timer_timeout():
 	
-	var next_level = int(str(current_level.get_path()).split("_")[1]) + 1
+	var next_level = int(current_level.level_name.split(" ")[1]) + 1
 	change_level(next_level)
 	#$HUD/ClearedLabel.visible = false
 	
 
+func _on_player_hit():
+	$DeathTimer.start()
+
+func _on_death_timer_timeout():
+	current_level.queue_free()
+	_ready()
+
+func display_level_title():
+	$CanvasLayer/LevelTitle.text = current_level.level_name
+	$CanvasLayer/LevelTitle.visible = true
+	$TitleTimer.start(3)
+
+
+func _on_title_timer_timeout():
+	$CanvasLayer/LevelTitle.visible = false

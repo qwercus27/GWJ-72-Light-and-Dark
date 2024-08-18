@@ -24,6 +24,6 @@ func update(delta: float) -> void:
 	elif Input.is_action_pressed("left") or Input.is_action_pressed("right"):
 		state_machine.transition_to("Run")
 		
-
-		
+	
+ 	
 

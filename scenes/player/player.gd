@@ -5,6 +5,7 @@ signal grabbed_ladder
 signal released_ladder
 signal lit_torch
 signal opened_door
+signal hit
 
 var speed = 200.0
 var ladder_speed = 150.0
@@ -14,8 +15,12 @@ var can_descend = false
 var can_drop = false
 var can_light = false
 var can_open = false
+var can_unlock = false
 var current_one_way
 var current_torch
+var current_lock
+
+var key_count = 0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -25,6 +30,11 @@ func _ready():
 	$AnimatedSprite2D.modulate.a = 1.0
 	$PointLight2D.energy = 1
 	can_open = false
+	key_count = 0
+	$Interact.set_monitorable(true)
+	$CollisionShape2D.disabled = false
+	velocity.y = 0
+	$RunningAudio.volume_db = -10
 
 func _physics_process(delta):
 	
@@ -43,12 +53,15 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("a"):
 			current_torch.interact()
 			lit_torch.emit()
+			can_light = false
 	
 	if can_open:
 		if Input.is_action_just_pressed("a") or Input.is_action_just_pressed("up"):
 			opened_door.emit()
 	
-
+	if key_count > 0 and can_unlock:
+		if Input.is_action_just_pressed("a"):
+			current_lock.unlock()
 	#if not is_on_floor():
 		#if(can_drop == true):
 			#print("cannot drop")
@@ -63,10 +76,17 @@ func _on_interact_area_entered(area):
 		can_drop = true
 		current_one_way = area.get_parent()
 	if area.is_in_group("torch"):
-		can_light = true
 		current_torch = area.get_parent()
+		if not current_torch.get_node("Lights").visible:
+			can_light = true
+		
 	if area.is_in_group("door"):
 		can_open = true
+	if area.is_in_group("key"):
+		key_count += 1
+	if area.is_in_group("lock"):
+		current_lock = area.get_parent()
+		can_unlock = true
 
 func _on_interact_area_exited(area):
 	if area.is_in_group("ladder"):
@@ -84,7 +104,13 @@ func _on_interact_area_exited(area):
 		can_light = false
 	if area.is_in_group("door"):
 		can_open = false
+	if area.is_in_group("lock"):
+		can_unlock = false
 		
 func exit(x_pos):
 	$StateMachine.transition_to("Exit", {door_x = x_pos})
-		
+
+func get_hit():
+	print("got hit")
+	$StateMachine.transition_to("Die")
+	hit.emit()
