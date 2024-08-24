@@ -1,7 +1,5 @@
 extends Node2D
 
-var view_width = 0
-var view_height = 0
 var game_scale = 3
 var current_level
 var torches_lit = 0
@@ -11,9 +9,6 @@ var door
 func _ready():
 	
 	torches_lit = 0
-
-	view_width = get_viewport().size.x
-	view_height = get_viewport().size.y
 	
 	current_level = Global.current_level.instantiate()
 	add_child(current_level)
@@ -23,7 +18,6 @@ func _ready():
 	$Player.get_node("StateMachine").transition_to("Air")
 	$Player._ready()
 	
-	#$Music.play()
 	if not AudioStreamer.get_node("Music").playing:
 		AudioStreamer.get_node("Music").play()
 	
@@ -33,9 +27,12 @@ func _ready():
 	current_level.get_node("DirectionalLight2D").visible = false
 	
 	display_level_title()
+	set_camera_limit()
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	camera_control()
 	
 	if torches_lit == current_level.torch_count and door.locked :
@@ -50,12 +47,19 @@ func _process(delta):
 
 
 func camera_control():
+	
 	$Camera.position.x = $Player.position.x
 	$Camera.position.y = $Player.position.y
-	$Camera.position.x = clamp($Camera.position.x, view_width/2, 
-		current_level.get_node("TileMap").get_used_rect().size.x*16*game_scale - view_width/2)
-	$Camera.position.y = clamp($Camera.position.y, view_height/2, 
-		current_level.get_node("TileMap").get_used_rect().size.y*16*game_scale - view_height/2)
+
+
+func set_camera_limit():
+	
+	var tilemap_rect = current_level.get_node("TileMap").get_used_rect()
+
+	$Camera.set_limit(SIDE_LEFT, 0)
+	$Camera.set_limit(SIDE_TOP, 0)
+	$Camera.set_limit(SIDE_RIGHT, tilemap_rect.size.x*16*3)
+	$Camera.set_limit(SIDE_BOTTOM, tilemap_rect.size.y*16*3)
 
 
 func _on_player_lit_torch():
@@ -63,6 +67,7 @@ func _on_player_lit_torch():
 
 
 func _on_player_opened_door():
+	
 	door.open()
 	$NextLevelTimer.start()
 	$Player.exit(door.position.x)
@@ -70,10 +75,12 @@ func _on_player_opened_door():
 
 
 func player_boundaries():
+	
 	$Player.position.x = clamp($Player.position.x, 0, 
 		current_level.get_node("TileMap").get_used_rect().size.x*16*game_scale)
 	
 func change_level(level_id):
+	
 	current_level.queue_free()
 	Global.current_level = load("res://scenes/levels/level_" + str(level_id) + ".tscn")
 	_ready()
@@ -87,21 +94,26 @@ func _on_next_level_timer_timeout():
 	else:
 		var next_level = int(current_level.level_name.split(" ")[1]) + 1
 		change_level(next_level)
-	#$HUD/ClearedLabel.visible = false
-	
+
 
 func _on_player_hit():
+	
 	$DeathTimer.start()
 
+
 func _on_death_timer_timeout():
+	
 	current_level.queue_free()
 	_ready()
 
+
 func display_level_title():
+	
 	$LevelTitle/Label.text = current_level.level_name
 	$LevelTitle.visible = true
 	$TitleTimer.start(3)
 
 
 func _on_title_timer_timeout():
+	
 	$LevelTitle.visible = false
