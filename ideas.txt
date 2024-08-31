@@ -7,39 +7,24 @@ light and dark
 - enemies' eyes and platforms are only visible in the dark
 	- or silhouettes
 
-- light switches -- puzzle platformer
-	- darkness changes gameplay
-	- mobs only spawn in darkness?
-	- sunlight hurts mobs?
-	- windows, rays, pillars of light
-	- lead mobs towards light to kill them?
-	- bright areas have different mobs that can't navigate in the dark?
-	- light and dark mobs fight each other?
-	- flashlight is your weapon?
-	- mirrors spread and direct light
-	- light torches to illuminate platform map?
-	- puzzles are centered around illuminating the map for your traversal?
-		- torches / braziers
-		- fire arrows
-		- electric lights / switches
-		- windows / "curtain" switches
-		- glowing mobs
-		- lava
 
-		- locked doors, need key
-		- gates, need switch
-		- switch activates one item, deactivates another
-		- push blocks - opens one path, closes another
-		- mob guarding light source
-		- light generating mob behind gate
+- puzzles are centered around illuminating the map for your traversal?
+	- torches / braziers
+	- fire arrows
+	- electric lights / switches
+	- windows / "curtain" switches
+	- glowing mobs
+	- lava
+	- gates, need switch
+	- switch activates one item, deactivates another
+	- push blocks - opens one path, closes another
+	- mob guarding light source
+	- light generating mob behind gate
 
-start with:
+- mob purpose?
+	- moving light source
+	- instant death? --> reset level?
 
-- torches
-- platform tiles
-- level completion condition (all lights on / brightness threshold?)
-- simple mob (walking)
+next:
 
-
-- uncover map as you explore?
-	- land becomes lit after you see it?
+- push blocks
